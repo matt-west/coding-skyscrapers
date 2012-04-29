@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+   <channel>
+      <title>Coding Skyscrapers</title>
+      <link>http://codingskyscrapers.com</link>
+      <description>The personal blog of Matt West.</description>
+      <language>en-gb</language>
+      <generator>GO-Blog Framework</generator>
+      <managingEditor>matt.west@kojilabs.com</managingEditor>
+      <webMaster>matt.west@kojilabs.com</webMaster>
+      {{range .}}
+      <item>
+         <title>{{.Title}}</title>
+         <link>http://codingskyscrapers.com/{{.Slug}}</link>
+         <description>{{.Description}}</description>
+         {{if .MachineDate}}<pubDate>{{.MachineDate}}</pubDate>{{end}}
+         <guid>http://codingskyscrapers.com/{{.Slug}}</guid>
+      </item>
+      {{end}}
+   </channel>
+</rss>

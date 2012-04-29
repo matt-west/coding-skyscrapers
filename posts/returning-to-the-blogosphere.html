@@ -9,6 +9,6 @@
 		<p>I&rsquo;ll try and update this blog a lot more frequently in the future but for now peace out.</p>
 	</div>
 	<footer>
-		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> | Tagged 
+		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
 	</footer>
 </article>

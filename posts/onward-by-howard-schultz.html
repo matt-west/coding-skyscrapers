@@ -9,6 +9,6 @@
 		<p>Overall I thought this book was pretty good and it made some&nbsp;thoroughly&nbsp;enjoyable reading. My favourite thing about the book was the fact that Howard had included the memos and emails sent out to Starbucks staff during the companies transformation. I would&nbsp;definitely&nbsp;recommend this book to anyone that is interested in business or Starbucks.</p>
 	</div>
 	<footer>
-		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> | Tagged 
+		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
 	</footer>
 </article>

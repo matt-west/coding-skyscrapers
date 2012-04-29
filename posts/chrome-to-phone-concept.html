@@ -12,6 +12,6 @@
 		<p>This is currently just an idea however I will try and get a prototype working this weekend. For now I am just mind-dumping the idea here. If you are interested in getting involved with the coding get in touch (<a href="http://twitter.com/#!/MattAntWest" target="_blank" style="text-decoration: none; color: #ff6600;">@MattAntWest</a>).</p>
 	</div>
 	<footer>
-		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> | Tagged 
+		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
 	</footer>
 </article>

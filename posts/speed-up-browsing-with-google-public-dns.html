@@ -15,6 +15,6 @@
 		<p>I would add that this is an &lsquo;experimental service&rsquo; so be prepared to have to switch back if it is discontinued. If you have any questions post them in the comments below and I&rsquo;ll do my best to answer them.</p>
 	</div>
 	<footer>
-		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> | Tagged 
+		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
 	</footer>
 </article>

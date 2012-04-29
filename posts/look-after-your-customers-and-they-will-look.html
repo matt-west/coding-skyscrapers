@@ -20,6 +20,6 @@
 		<p>This is the end of today&rsquo;s ramble I hope I haven&rsquo;t bored you too much. Remember:<br /><em>&ldquo;Look after your customers and they will look after you&rdquo;</em></p>
 	</div>
 	<footer>
-		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> | Tagged 
+		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
 	</footer>
 </article>

@@ -17,6 +17,6 @@
 		<p>By fulfilling all of these points you are well on your way to making sure that you are providing your users with the best possible experience. You might also find that they are more likely to use your products again in the future. I plan to build &lsquo;data liberation&rsquo; tools into all of the software that I produce in the future, and might even revisit some old projects. My view is that it&rsquo;s time wisely invested, what do you think?</p>
 	</div>
 	<footer>
-		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> | Tagged 
+		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
 	</footer>
 </article>

@@ -77,7 +77,6 @@ section#left header {
 	padding: 1em;
 	margin: 1.35em;
 	background: rgba(255, 255, 255, 0.45);
-	transition: 1s;
 	-webkit-transition: all .3s ease-in-out;
 	-moz-transition: all .3s ease-in-out;
 	-o-transition: all .3s ease-in-out;
@@ -86,7 +85,7 @@ section#left header {
 }
 
 section#left header:hover {
-background: rgba(255, 255, 255, 0.6);
+	background: rgba(255, 255, 255, 0.75);
 }
 
 section#left header h1 {
@@ -108,11 +107,17 @@ section#left header h1 a:focus {
 }
 
 section#left header h2 {
+	font-weight: 200;
+	margin-top: 0.5em;
+	font-size: 0.9em;
+}
 
+section#left header h2 a {
+	color: #595959;
 }
 
 section#left header nav {
-	margin-top: 3em;
+	margin-top: 2em;
 	font-size: 0.9em;
 }
 
@@ -206,6 +211,12 @@ article section h1 {
 	color: #000;
 }
 
+article h3,
+article section h2 {
+	color: #000;
+	margin: 0;
+}
+
 article p {
 	margin: 1em 0;
 	text-align: justify;
@@ -216,7 +227,8 @@ article footer {
 	color: #636363;
 }
 
-article footer a {
+article footer a,
+article footer a:visited {
 	color: #636363;
 	border-bottom: dotted 1px #636363;
 }
