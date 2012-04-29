@@ -1,0 +1,37 @@
+<article>
+	<header>
+		<h1><a href="/{{.Slug |html}}" title="{{.Title |html}}">{{.Title |html}}</a></h1>
+	</header>
+	<div>
+		<p>
+			<h2>Michael Mahemoff</h2>
+			<p>
+				Web vs Native Apps.
+				Native apps are still ahead of web in UI, notifications and persistining a state after the user has killed them.
+			</p>
+
+			<h2>Paul Kinlan</h2>
+			<p>
+				Interconnected web and web intents.
+				Web services should be able to talk to each other without the need for integrations by developers.
+			</p>
+
+			<h2>Martin Beeby</h2>
+			<p>
+				Demo's died :(<br>
+				IE10 is looking at lot better than older versions of IE. Still not great. No WebGL yet.
+			</p>
+
+			<h2>Chris Heilmann</h2>
+			<p>
+				HTML5 is not ready yet, we need to build the tools to get businesses on board and show that HTML5 is a viable option.
+			</p>
+			<p>
+				Mozilla has opened a new office in London. Open space, drop by if you want to hang out there. (tweet them first)
+			</p>
+		</p>
+	</div>
+	<footer>
+		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time>
+	</footer>
+</article>
