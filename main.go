@@ -3,9 +3,19 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"text/template"
 )
+
+type Config struct {
+	URL         string
+	Title       string
+	Description string
+	Lang        string
+	Editor      string
+	Webmaster   string
+}
 
 type Page struct {
 	Slug        string
@@ -35,6 +45,17 @@ type Sidebar struct {
 	Pages  map[string]*Page
 }
 
+type RSS struct {
+	Config *Config
+	Posts  []Post
+}
+
+type Sitemap struct {
+	Config *Config
+	Pages  []Page
+	Posts  []Post
+}
+
 const assetPath = len("/")
 const pagePath = len("/page/")
 const tagPath = len("/tag/")
@@ -42,8 +63,12 @@ const postPath = len("/")
 
 const maxPosts = 10 // Number posts to display on homepage
 
+// Config
+var config = new(Config)
+
 // Pages
 var pages = make(map[string]*Page)
+var pagesJSON []Page
 var pageTemplates = make(map[string]*template.Template)
 
 // Posts
@@ -55,19 +80,30 @@ var postTemplates = make(map[string]*template.Template)
 var layoutTemplates *template.Template
 var errorTemplates *template.Template
 var rssTemplate *template.Template
+var sitemapTemplate *template.Template
 var sidebarAssets *Sidebar
 
 // Tags
 var tags = make(map[string]*Tag)
 
 // Static Assets i.e. Favicons or Humans.txt
-var staticAssets = []string{"humans.txt","favicon.ico"}
+var staticAssets = []string{"humans.txt", "favicon.ico"}
 
 // Init Function to Load Template Files and JSON Dict to Cache
 func init() {
+	log.Println("Loading Config")
+	loadConfig()
+
+	log.Println("Loading Templates")
 	loadTemplates()
+
+	log.Println("Loading Pages")
 	loadPages()
+
+	log.Println("Loading Posts")
 	loadPosts()
+
+	log.Println("Loading Tags")
 	loadTags()
 
 	n := 5
@@ -77,6 +113,16 @@ func init() {
 	}
 
 	sidebarAssets = &Sidebar{postsJSON[0:n], tags, pages}
+}
+
+// Load the Config File (config/app.json)
+func loadConfig() {
+	configRaw, _ := ioutil.ReadFile("config/app.json")
+	err := json.Unmarshal(configRaw, config)
+
+	if err != nil {
+		panic("Could not parse config file!")
+	}
 }
 
 // Load The Tags Map
@@ -101,7 +147,6 @@ func loadTags() {
 // Load Pages Dict and Templates
 func loadPages() {
 	pagesRaw, _ := ioutil.ReadFile("data/pages.json")
-	var pagesJSON []Page
 	err := json.Unmarshal(pagesRaw, &pagesJSON)
 	if err != nil {
 		panic("Could not parse Pages JSON!")
@@ -140,6 +185,7 @@ func loadTemplates() {
 	layoutTemplates = template.Must(template.ParseFiles("./templates/layouts.html"))
 	errorTemplates = template.Must(template.ParseFiles("./templates/errors/404.html", "./templates/errors/505.html"))
 	rssTemplate = template.Must(template.ParseFiles("./templates/rss.xml"))
+	sitemapTemplate = template.Must(template.ParseFiles("./templates/sitemap.xml"))
 }
 
 // Page Handler Constructs and Serves Pages
@@ -305,16 +351,30 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func rssHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/xml")
-	rssTemplate.Execute(w, postsJSON)
+	rss := RSS{config, postsJSON}
+	rssTemplate.Execute(w, rss)
+}
+
+func sitemapHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/xml")
+	sitemap := Sitemap{config, pagesJSON, postsJSON}
+	sitemapTemplate.Execute(w, sitemap)
 }
 
 // Starts Server and Routes Requests
 func main() {
+	log.Println("Starting: " + config.Title)
+
 	http.HandleFunc("/archive", archiveHandler)
 	http.HandleFunc("/page/", pageHandler)
 	http.HandleFunc("/tag/", tagHandler)
 	http.HandleFunc("/assets/", assetHandler)
 	http.HandleFunc("/rss", rssHandler)
+	http.HandleFunc("/sitemap", sitemapHandler)
 	http.HandleFunc("/", postHandler)
-	http.ListenAndServe(":9981", nil)
+
+	err := http.ListenAndServe(":9981", nil)
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
 }

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+{{$url := .Config.URL}}
 <rss version="2.0">
    <channel>
-      <title>Coding Skyscrapers</title>
-      <link>http://codingskyscrapers.com</link>
-      <description>The personal blog of Matt West.</description>
-      <language>en-gb</language>
+      <title>{{.Config.Title}}</title>
+      <link>{{.Config.URL}}</link>
+      <description>{{.Config.Description}}</description>
+      <language>{{.Config.Lang}}</language>
       <generator>GO-Blog Framework</generator>
-      <managingEditor>matt.west@kojilabs.com</managingEditor>
-      <webMaster>matt.west@kojilabs.com</webMaster>
-      {{range .}}
+      <managingEditor>{{.Config.Editor}}</managingEditor>
+      <webMaster>{{.Config.Webmaster}}</webMaster>
+      {{range .Posts}}
       <item>
          <title>{{.Title}}</title>
-         <link>http://codingskyscrapers.com/{{.Slug}}</link>
+         <link>{{$url}}/{{.Slug}}</link>
          <description>{{.Description}}</description>
          {{if .MachineDate}}<pubDate>{{.MachineDate}}</pubDate>{{end}}
-         <guid>http://codingskyscrapers.com/{{.Slug}}</guid>
+         <guid>{{$url}}/{{.Slug}}</guid>
       </item>
       {{end}}
    </channel>
