@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"text/template"
+	"os"
+	"strconv"
 )
 
 type Config struct {
@@ -91,6 +93,9 @@ var staticAssets = []string{"humans.txt", "favicon.ico"}
 
 // Init Function to Load Template Files and JSON Dict to Cache
 func init() {
+	log.Println("PID: " + strconv.Itoa(os.Getpid()))
+	ioutil.WriteFile("tmp/go-blog.pid", []byte(strconv.Itoa(os.Getpid())), 0600)
+
 	log.Println("Loading Config")
 	loadConfig()
 
