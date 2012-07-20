@@ -1,22 +1,12 @@
-<article>
-	<header>
-		<h1><a href="/{{.Slug |html}}" title="{{.Title |html}}">{{.Title |html}}</a></h1>
-	</header>
-	<div>
-		<p>
-			After hearing news of Posterous' recent acquisition by Twitter I've decided to move my blog. For the past few months I've been pondering the idea of building a blog framework with GO and figured this would be a good excuse to finally get around to building it. So here it is!
-		</p>
-		<p>
-			I'll post more about the framework I created (<a href="https://github.com/matt-west/go-blog" title="GO-blog">GO-blog</a>) soon but basically it is really simple and hacker friendly. All of the templates (pages and posts) are stored in memory which makes generating pages really fast. There's no database I just use a JSON dictionary to store information about posts and pages. I'm still working on getting tags up and running.
-		</p>
-		<p>
-			I've got go-blog running behind nginx and I'm just using a simple proxy_pass to route requests to the go app.
-		</p>
-		<p>
-			All of the code is up on github here: <a href="https://github.com/matt-west/go-blog">https://github.com/matt-west/go-blog</a>.
-		</p>
-	</div>
-	<footer>
-		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
-	</footer>
-</article>
+<p>
+	After hearing news of Posterous' recent acquisition by Twitter I've decided to move my blog. For the past few months I've been pondering the idea of building a blog framework with GO and figured this would be a good excuse to finally get around to building it. So here it is!
+</p>
+<p>
+	I'll post more about the framework I created (<a href="https://github.com/matt-west/go-blog" title="GO-blog">GO-blog</a>) soon but basically it is really simple and hacker friendly. All of the templates (pages and posts) are stored in memory which makes generating pages really fast. There's no database I just use a JSON dictionary to store information about posts and pages. I'm still working on getting tags up and running.
+</p>
+<p>
+	I've got go-blog running behind nginx and I'm just using a simple proxy_pass to route requests to the go app.
+</p>
+<p>
+	All of the code is up on github here: <a href="https://github.com/matt-west/go-blog">https://github.com/matt-west/go-blog</a>.
+</p>

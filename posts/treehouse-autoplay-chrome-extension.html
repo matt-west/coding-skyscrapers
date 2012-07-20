@@ -1,40 +1,30 @@
-<article>
-	<header>
-		<h1><a href="/{{.Slug |html}}" title="{{.Title |html}}">{{.Title |html}}</a></h1>
-	</header>
-	<div>
-		<p>
-			<img src="/assets/img/treehouse-autoplay-chrome-extension.png" alt="Treehouse Autoplay Chrome Extension" />
-		</p>
-		<p>
-			Since <a href="http://teamtreehouse.com/" title="Treehouse" rel="nofollow">Treehouse</a> was launched earlier this week I have been watching a lot of the videos and working my way through the badges. I often have the videos playing in the background whilst I'm working and the only problem is that you have to manually move on to the next video all the time.
-		</p>
-		<p>
-			So I decided to build a little chrome extension to automatically play through all of the videos in a badge. The extension looks at the current video and reads the video list to determine the next video in the playlist. Once the current video has finished playing it will automatically load the new one and start the video playing. Unfortunatly it doesn't support fullscreen viewing yet but I will try and get it sorted soon.
-		</p>
-		<p>
-			The extension injects some javascript into the page to handle the auto play feature and also has a background page which is responsible for switching the toolbar icon between the active and inactive states. There are instructions on how to install the extension in the code repo. I will release the extension in the chrome webstore to make it easier to install if the guys at treehouse are happy for me to do so.
-		</p>
-		<p>
-			You can get the code on github.
-		</p>
-		<p>
-			<a href="https://github.com/matt-west/treehouse-autoplay">https://github.com/matt-west/treehouse-autoplay</a>
-		</p>
-		<p>
-			&nbsp;
-		</p>
-		<p>
-			<strong>UPDATE:</strong>
-		</p>
-		<p>
-			You can now install the extension directly from the Chrome Web Store.
-		</p>
-		<p>
-			<a href="https://chrome.google.com/webstore/detail/epcbdbkjnonaliagdjccjnoejpgdnjkm?hl=en-US">https://chrome.google.com/webstore/detail/epcbdbkjnonaliagdjccjnoejpgdnjkm?hl=en-US</a>
-		</p>
-	</div>
-	<footer>
-		<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
-	</footer>
-</article>
+<p>
+	<img src="/assets/img/treehouse-autoplay-chrome-extension.png" alt="Treehouse Autoplay Chrome Extension" />
+</p>
+<p>
+	Since <a href="http://teamtreehouse.com/" title="Treehouse" rel="nofollow">Treehouse</a> was launched earlier this week I have been watching a lot of the videos and working my way through the badges. I often have the videos playing in the background whilst I'm working and the only problem is that you have to manually move on to the next video all the time.
+</p>
+<p>
+	So I decided to build a little chrome extension to automatically play through all of the videos in a badge. The extension looks at the current video and reads the video list to determine the next video in the playlist. Once the current video has finished playing it will automatically load the new one and start the video playing. Unfortunatly it doesn't support fullscreen viewing yet but I will try and get it sorted soon.
+</p>
+<p>
+	The extension injects some javascript into the page to handle the auto play feature and also has a background page which is responsible for switching the toolbar icon between the active and inactive states. There are instructions on how to install the extension in the code repo. I will release the extension in the chrome webstore to make it easier to install if the guys at treehouse are happy for me to do so.
+</p>
+<p>
+	You can get the code on github.
+</p>
+<p>
+	<a href="https://github.com/matt-west/treehouse-autoplay">https://github.com/matt-west/treehouse-autoplay</a>
+</p>
+<p>
+	&nbsp;
+</p>
+<p>
+	<strong>UPDATE:</strong>
+</p>
+<p>
+	You can now install the extension directly from the Chrome Web Store.
+</p>
+<p>
+	<a href="https://chrome.google.com/webstore/detail/epcbdbkjnonaliagdjccjnoejpgdnjkm?hl=en-US">https://chrome.google.com/webstore/detail/epcbdbkjnonaliagdjccjnoejpgdnjkm?hl=en-US</a>
+</p>

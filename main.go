@@ -8,6 +8,7 @@ import (
 	"text/template"
 	"os"
 	"strconv"
+	"time"
 )
 
 type Config struct {
@@ -93,8 +94,6 @@ var staticAssets = []string{"humans.txt", "favicon.ico"}
 
 // Init Function to Load Template Files and JSON Dict to Cache
 func init() {
-	log.Println("PID: " + strconv.Itoa(os.Getpid()))
-	ioutil.WriteFile("tmp/go-blog.pid", []byte(strconv.Itoa(os.Getpid())), 0600)
 
 	log.Println("Loading Config")
 	loadConfig()
@@ -266,6 +265,9 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	// Sidebar
 	layoutTemplates.ExecuteTemplate(w, "Sidebar", sidebarAssets)
 
+	// Post Header
+	layoutTemplates.ExecuteTemplate(w, "PostHeader", p)
+
 	// Post Template
 	err := postTemplates[slug].Execute(w, p)
 	if err != nil {
@@ -273,6 +275,9 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		errorTemplates.ExecuteTemplate(w, "505", nil)
 		return
 	}
+
+	// Post Footer
+	layoutTemplates.ExecuteTemplate(w, "PostFooter", p)
 
 	// Comments
 	layoutTemplates.ExecuteTemplate(w, "Comments", nil)
@@ -347,7 +352,14 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		if i >= maxPosts {
 			break
 		}
+		// Post Header
+		layoutTemplates.ExecuteTemplate(w, "PostHeader", posts[tmpl.Slug])
+
+		// Post Content
 		postTemplates[tmpl.Slug].Execute(w, posts[tmpl.Slug])
+
+		// Post Footer
+		layoutTemplates.ExecuteTemplate(w, "PostFooter", posts[tmpl.Slug])
 	}
 
 	// Footer
@@ -368,6 +380,28 @@ func sitemapHandler(w http.ResponseWriter, r *http.Request) {
 
 // Starts Server and Routes Requests
 func main() {
+
+	if len(os.Args) < 2 {
+		log.Println("Available Commands: start stop restart")
+		os.Exit(1)
+	}
+
+	if os.Args[1] == "start" {
+		startServer()
+	} else if os.Args[1] == "stop" {
+		stopServer()
+		os.Exit(0)
+	} else if os.Args[1] == "restart" {
+		restartServer()
+	} else {
+		log.Println("Available Commands: start stop restart")
+		os.Exit(1)
+	}
+
+}
+
+
+func startServer() {
 	log.Println("Starting: " + config.Title)
 
 	http.HandleFunc("/archive", archiveHandler)
@@ -378,8 +412,30 @@ func main() {
 	http.HandleFunc("/sitemap", sitemapHandler)
 	http.HandleFunc("/", postHandler)
 
+	log.Println("PID: " + strconv.Itoa(os.Getpid()))
+	ioutil.WriteFile("tmp/go-blog.pid", []byte(strconv.Itoa(os.Getpid())), 0600)
+
 	err := http.ListenAndServe(":9981", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
+}
+
+func stopServer() {
+	b, _ := ioutil.ReadFile("tmp/go-blog.pid")
+	pid, _ := strconv.Atoi(string(b))
+
+	p, _ := os.FindProcess(pid)
+	log.Println("Stopping process " + string(b))
+	err := p.Kill()
+
+	if err != nil {
+		log.Println("Could not stop process")
+	}
+}
+
+func restartServer() {
+	stopServer()
+	time.Sleep(1000 * time.Millisecond) // Wait 1 second
+	startServer()
 }

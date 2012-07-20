@@ -284,6 +284,27 @@ section#right h4 a {
 	color: #636363;
 }
 
+/*****************
+	Social
+*****************/
+
+.tweet-btn {
+	float: left;
+}
+
+.g-plus-one {
+	float: left;
+}
+
+.fb-like {
+	top: -3px;
+}
+
+.fb-like span,
+.fb-like iframe {
+	height: 20px !important;
+}
+
 /**************************
 	Media Queries
 **************************/

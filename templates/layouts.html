@@ -76,6 +76,36 @@
 	</article>
 {{end}}
 
+{{define "PostHeader"}}
+<article>
+	<header>
+		<h1><a href="/{{.Slug |html}}" title="{{.Title |html}}">{{.Title |html}}</a></h1>
+	</header>
+	<div>
+{{end}}
+
+{{define "PostFooter"}}
+	</div>
+	<footer>
+		<p>
+			<time datetime="{{.MachineDate |html}}">Posted on {{.Date |html}}</time> - Tagged: {{range .Tags}}<a href="/tag/{{.}}" class="postTag">#{{.}}</a> {{end}}
+		</p>
+		<p>
+			<!-- Twitter -->
+			<div class="tweet-btn">
+				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://codingskyscrapers.com/{{.Slug |html}}" data-via="MattAntWest" data-text="{{.Title |html}}">
+					Tweet
+				</a>
+			</div>
+			<!-- Google+ -->
+			<div class="g-plusone" data-size="medium" data-href="http://codingskyscrapers.com/{{.Slug |html}}"></div>
+			<!-- Facebook -->
+			<div class="fb-like" data-href="http://codingskyscrapers.com/{{.Slug |html}}" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial"></div>
+		</p>
+	</footer>
+</article>
+{{end}}
+
 {{define "Comments"}}
 <div id="comments">
 	<div id="disqus_thread"></div>
@@ -112,6 +142,24 @@
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
 	</script>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	<script type="text/javascript">
+	  window.___gcfg = {lang: 'en-GB'};
+
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>
 {{end}}
