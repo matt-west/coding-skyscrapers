@@ -331,7 +331,14 @@ func tagHandler(w http.ResponseWriter, r *http.Request) {
 	layoutTemplates.ExecuteTemplate(w, "Sidebar", sidebarAssets)
 
 	for _, tmpl := range tags[slug].Posts {
+		// Post Header
+		layoutTemplates.ExecuteTemplate(w, "PostHeader", posts[tmpl.Slug])
+
+		// Post Content
 		postTemplates[tmpl.Slug].Execute(w, posts[tmpl.Slug])
+
+		// Post Footer
+		layoutTemplates.ExecuteTemplate(w, "PostFooter", posts[tmpl.Slug])
 	}
 
 	// Footer
