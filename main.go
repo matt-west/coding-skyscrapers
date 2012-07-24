@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"time"
 	"fmt"
+	"io"
 )
 
 type Config struct {
@@ -388,16 +389,22 @@ func sitemapHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func deployHandler(w http.ResponseWriter, r *http.Request) {
-	cmd := exec.Command("bash", "./deploy.sh")
-	err := cmd.Start()
-	if err != nil {
-	    log.Fatal(err)
-	}
-	log.Printf("Waiting for command to finish...")
-	err = cmd.Wait()
-	log.Printf("Command finished with error: %v", err)
-
-	fmt.Fprintf(w, "%s", "Thanks!")
+	cmd := exec.Command("bash ./deploy.sh")
+  stdout, err := cmd.StdoutPipe()
+  if err != nil {
+      fmt.Println(err)
+  }
+  stderr, err := cmd.StderrPipe()
+  if err != nil {
+      fmt.Println(err)
+  }
+  err = cmd.Start()
+  if err != nil {
+      fmt.Println(err)
+  }
+  go io.Copy(os.Stdout, stdout) 
+  go io.Copy(os.Stderr, stderr) 
+  cmd.Wait()
 }
 
 // Starts Server and Routes Requests
