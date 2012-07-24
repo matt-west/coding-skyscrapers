@@ -7,8 +7,10 @@ import (
 	"net/http"
 	"text/template"
 	"os"
+	"os/exec"
 	"strconv"
 	"time"
+	"fmt"
 )
 
 type Config struct {
@@ -385,6 +387,19 @@ func sitemapHandler(w http.ResponseWriter, r *http.Request) {
 	sitemapTemplate.Execute(w, sitemap)
 }
 
+func deployHandler(w http.ResponseWriter, r *http.Request) {
+	cmd := exec.Command("bash", "./deploy.sh")
+	err := cmd.Start()
+	if err != nil {
+	    log.Fatal(err)
+	}
+	log.Printf("Waiting for command to finish...")
+	err = cmd.Wait()
+	log.Printf("Command finished with error: %v", err)
+
+	fmt.Fprintf(w, "%s", "Thanks!")
+}
+
 // Starts Server and Routes Requests
 func main() {
 
@@ -407,10 +422,10 @@ func main() {
 
 }
 
-
 func startServer() {
 	log.Println("Starting: " + config.Title)
 
+	http.HandleFunc("/deploy", deployHandler)
 	http.HandleFunc("/archive", archiveHandler)
 	http.HandleFunc("/page/", pageHandler)
 	http.HandleFunc("/tag/", tagHandler)
