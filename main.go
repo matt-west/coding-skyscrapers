@@ -389,7 +389,7 @@ func sitemapHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func deployHandler(w http.ResponseWriter, r *http.Request) {
-	cmd := exec.Command("bash ./deploy.sh")
+	cmd := exec.Command("bash", "./deploy.sh")
   stdout, err := cmd.StdoutPipe()
   if err != nil {
       fmt.Println(err)
