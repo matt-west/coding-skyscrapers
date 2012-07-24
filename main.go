@@ -7,11 +7,8 @@ import (
 	"net/http"
 	"text/template"
 	"os"
-	"os/exec"
 	"strconv"
 	"time"
-	"fmt"
-	"io"
 )
 
 type Config struct {
@@ -388,25 +385,6 @@ func sitemapHandler(w http.ResponseWriter, r *http.Request) {
 	sitemapTemplate.Execute(w, sitemap)
 }
 
-func deployHandler(w http.ResponseWriter, r *http.Request) {
-	cmd := exec.Command("bash", "./deploy.sh")
-  stdout, err := cmd.StdoutPipe()
-  if err != nil {
-      fmt.Println(err)
-  }
-  stderr, err := cmd.StderrPipe()
-  if err != nil {
-      fmt.Println(err)
-  }
-  err = cmd.Start()
-  if err != nil {
-      fmt.Println(err)
-  }
-  go io.Copy(os.Stdout, stdout) 
-  go io.Copy(os.Stderr, stderr) 
-  cmd.Wait()
-}
-
 // Starts Server and Routes Requests
 func main() {
 
@@ -432,7 +410,6 @@ func main() {
 func startServer() {
 	log.Println("Starting: " + config.Title)
 
-	http.HandleFunc("/deploy", deployHandler)
 	http.HandleFunc("/archive", archiveHandler)
 	http.HandleFunc("/page/", pageHandler)
 	http.HandleFunc("/tag/", tagHandler)
