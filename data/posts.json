@@ -1,5 +1,17 @@
 [
 	{
+		"Title": "The Golden Circle",
+		"Slug": "the-golden-circle",
+		"Date": "24 July 2012",
+		"MachineDate": "2012-07-24",
+		"Keywords": "",
+		"Description": "A quick overview of the idea behind The Golden Circle.",
+		"Tags": [
+			"business",
+			"entrepreneurship"
+		]
+	},
+	{
 		"Title": "Building Dens",
 		"Slug": "building-dens",
 		"Date": "21 July 2012",
