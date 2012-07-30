@@ -362,6 +362,22 @@ section#right h4 a {
 	}
 }
 
+@media only screen and (max-width: 768px), only screen and (max-device-width: 768px) {
+	article,
+	div#comments {
+		padding: 2em;
+		font-size: 0.7em;
+	}
+
+	section#left {
+		font-size: 0.8em;
+	}
+
+	.fg-right {
+		float: none;
+	}
+}
+
 
 @media only screen and (max-width: 600px), only screen and (max-device-width: 600px) {
 	body {
@@ -382,6 +398,10 @@ section#right h4 a {
 
 	section#left header {
 		margin: 0.8em;
+	}
+
+	section#left header nav h3 {
+		clear: both;
 	}
 
 	section#left header nav {
@@ -406,6 +426,10 @@ section#right h4 a {
 	section#center article {
 		padding: 1.5em;
 		margin: 0.8em;
+	}
+
+	article {
+		font-size: 1em
 	}
 }
 
