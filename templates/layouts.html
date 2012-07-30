@@ -76,15 +76,13 @@
 	</article>
 {{end}}
 
-{{define "PostHeader"}}
+{{define "Post"}}
 <article>
 	<header>
 		<h1><a href="/{{.Slug |html}}" title="{{.Title |html}}">{{.Title |html}}</a></h1>
 	</header>
 	<div>
-{{end}}
-
-{{define "PostFooter"}}
+		{{.Content}}
 	</div>
 	<footer>
 		<p>

@@ -13,7 +13,9 @@
       <item>
          <title>{{.Title}}</title>
          <link>{{$url}}/{{.Slug}}</link>
-         <description>{{.Description}}</description>
+         <summary type="html">
+            {{.Content |html}}
+         </summary>
          {{if .MachineDate}}<pubDate>{{.MachineDate}}</pubDate>{{end}}
          <guid>{{$url}}/{{.Slug}}</guid>
       </item>

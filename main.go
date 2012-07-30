@@ -34,6 +34,7 @@ type Post struct {
 	MachineDate string
 	Keywords    string
 	Description string
+	Content     string
 	Tags        []string
 }
 
@@ -77,7 +78,6 @@ var pageTemplates = make(map[string]*template.Template)
 // Posts
 var posts = make(map[string]*Post)
 var postsJSON []Post // Need this so that there is an ordered list of posts
-var postTemplates = make(map[string]*template.Template)
 
 // Templates
 var layoutTemplates *template.Template
@@ -175,12 +175,12 @@ func loadPosts() {
 	}
 
 	for i := 0; i < len(postsJSON); i++ {
-		posts[postsJSON[i].Slug] = &postsJSON[i]
-	}
+		slug := postsJSON[i].Slug
+		posts[slug] = &postsJSON[i]
 
-	for _, tmpl := range posts {
-		t := template.Must(template.ParseFiles("./posts/" + tmpl.Slug + ".html"))
-		postTemplates[tmpl.Slug] = t
+		// Read the post content file.
+		b, _ := ioutil.ReadFile("./posts/" + slug + ".html")
+		posts[slug].Content = string(b)
 	}
 }
 
@@ -265,19 +265,13 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	// Sidebar
 	layoutTemplates.ExecuteTemplate(w, "Sidebar", sidebarAssets)
 
-	// Post Header
-	layoutTemplates.ExecuteTemplate(w, "PostHeader", p)
-
-	// Post Template
-	err := postTemplates[slug].Execute(w, p)
+	// Post
+	err := layoutTemplates.ExecuteTemplate(w, "Post", p)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		errorTemplates.ExecuteTemplate(w, "505", nil)
 		return
 	}
-
-	// Post Footer
-	layoutTemplates.ExecuteTemplate(w, "PostFooter", p)
 
 	// Comments
 	layoutTemplates.ExecuteTemplate(w, "Comments", nil)
@@ -331,14 +325,8 @@ func tagHandler(w http.ResponseWriter, r *http.Request) {
 	layoutTemplates.ExecuteTemplate(w, "Sidebar", sidebarAssets)
 
 	for _, tmpl := range tags[slug].Posts {
-		// Post Header
-		layoutTemplates.ExecuteTemplate(w, "PostHeader", posts[tmpl.Slug])
-
-		// Post Content
-		postTemplates[tmpl.Slug].Execute(w, posts[tmpl.Slug])
-
-		// Post Footer
-		layoutTemplates.ExecuteTemplate(w, "PostFooter", posts[tmpl.Slug])
+		// Post
+		layoutTemplates.ExecuteTemplate(w, "Post", posts[tmpl.Slug])
 	}
 
 	// Footer
@@ -359,14 +347,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		if i >= maxPosts {
 			break
 		}
-		// Post Header
-		layoutTemplates.ExecuteTemplate(w, "PostHeader", posts[tmpl.Slug])
-
-		// Post Content
-		postTemplates[tmpl.Slug].Execute(w, posts[tmpl.Slug])
-
-		// Post Footer
-		layoutTemplates.ExecuteTemplate(w, "PostFooter", posts[tmpl.Slug])
+		
+		// Post
+		layoutTemplates.ExecuteTemplate(w, "Post", posts[tmpl.Slug])
 	}
 
 	// Footer
@@ -374,7 +357,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func rssHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/xml")
+	w.Header().Set("Content-Type", "text/atom+xml; charset=utf-8")
 	rss := RSS{config, postsJSON}
 	rssTemplate.Execute(w, rss)
 }
